@@ -73,3 +73,5 @@ crashlytics-build.properties
 
 # ADDED
 .DS_Store
+/[Aa]ssets/[Ss]amples.meta
+/[Aa]ssets/[Ss]amples/

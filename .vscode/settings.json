@@ -56,5 +56,6 @@
         "temp/": true,
         "Temp/": true
     },
-    "dotnet.defaultSolution": "grid.sln"
+    "dotnet.defaultSolution": "grid.sln",
+    "editor.acceptSuggestionOnCommitCharacter": false
 }
