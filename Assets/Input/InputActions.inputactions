@@ -1,12 +1,12 @@
 {
-    "name": "PlayerInput",
+    "name": "CameraActions",
     "maps": [
         {
-            "name": "Camera",
+            "name": "camera",
             "id": "6ce78314-af6b-412b-b06e-dfdf4b5347fc",
             "actions": [
                 {
-                    "name": "Drag",
+                    "name": "drag",
                     "type": "Button",
                     "id": "345c607d-1de9-41ef-a3b0-1a6041c803f2",
                     "expectedControlType": "Button",
@@ -23,7 +23,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "Drag",
+                    "action": "drag",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

@@ -7,13 +7,15 @@ using UnityEngine.UIElements;
 
 public class CameraManager : MonoBehaviour
 {
-    private Vector3 _origin;
-    private Vector3 _difference;
+    [SerializeField]
+    GridManager _grid;
 
-    private Camera _camera;
-    private bool _isDragging;
+    Camera _camera;
+    Vector3 _origin;
+    Vector3 _difference;
+    bool _isDragging;
 
-    private void Awake()
+    void Awake()
     {
         _camera = Camera.main;
     }
@@ -25,15 +27,16 @@ public class CameraManager : MonoBehaviour
 
     }
 
-    private void LateUpdate()
+    void LateUpdate()
     {
         if (!_isDragging) return;
         _difference = GetMousePosition - transform.position;
         Vector3 _newPos = _origin - _difference;
-        _newPos.x = Mathf.Clamp(_newPos.x, 0, 10);
-        _newPos.y = Mathf.Clamp(_newPos.y, 0, 10);
+        float offset = _grid._size / 0.1f;
+        _newPos.x = Mathf.Clamp(_newPos.x, 0, 10 * offset);
+        _newPos.y = Mathf.Clamp(_newPos.y, 0, 10 * offset);
         transform.position = _newPos;
     }
 
-    private Vector3 GetMousePosition => _camera.ScreenToWorldPoint(Mouse.current.position.ReadValue());
+    Vector3 GetMousePosition => _camera.ScreenToWorldPoint(Mouse.current.position.ReadValue());
 }
