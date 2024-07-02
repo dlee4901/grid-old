@@ -8,7 +8,7 @@ using UnityEngine.UIElements;
 public class CameraManager : MonoBehaviour
 {
     [SerializeField]
-    GridManager _grid;
+    GridProperties _gridProperties;
 
     Camera _camera;
     Vector3 _origin;
@@ -24,18 +24,17 @@ public class CameraManager : MonoBehaviour
     {
         if (ctx.started) _origin = GetMousePosition;
         _isDragging = ctx.started || ctx.performed;
-
     }
 
     void LateUpdate()
     {
         if (!_isDragging) return;
         _difference = GetMousePosition - transform.position;
-        Vector3 _newPos = _origin - _difference;
-        float offset = _grid._size / 0.1f;
-        _newPos.x = Mathf.Clamp(_newPos.x, 0, 10 * offset);
-        _newPos.y = Mathf.Clamp(_newPos.y, 0, 10 * offset);
-        transform.position = _newPos;
+        Vector3 newPos = _origin - _difference;
+        float offset = _gridProperties.size / 0.1f;
+        newPos.x = Mathf.Clamp(newPos.x, offset, _gridProperties.x * offset);
+        newPos.y = Mathf.Clamp(newPos.y, offset, _gridProperties.y * offset);
+        transform.position = newPos;
     }
 
     Vector3 GetMousePosition => _camera.ScreenToWorldPoint(Mouse.current.position.ReadValue());

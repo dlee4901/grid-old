@@ -26,7 +26,7 @@ Transform:
   m_GameObject: {fileID: 4948104318210269980}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.24279374, y: -0.09293204, z: -10.001442}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -59,7 +59,7 @@ MonoBehaviour:
   m_ActionEvents:
   - m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 5986778479441841594, guid: 57234644687704ef89d2caab5b5d5e56, type: 3}
         m_TargetAssemblyTypeName: CameraManager, Assembly-CSharp
         m_MethodName: OnDrag
         m_Mode: 0
@@ -75,6 +75,6 @@ MonoBehaviour:
     m_ActionName: Camera/Drag[/Mouse/leftButton]
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
-  m_DefaultActionMap: Camera
+  m_DefaultActionMap: camera
   m_SplitScreenIndex: -1
   m_Camera: {fileID: 0}
