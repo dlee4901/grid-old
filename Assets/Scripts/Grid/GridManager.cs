@@ -5,16 +5,12 @@ using UnityEngine;
 public class GridManager : MonoBehaviour
 {
     [SerializeField]
-    GridProperties _gridProperties;
+    GridProperties gridProperties;
 
     [SerializeField]
-    Tile _tile;
+    Tile tile;
 
-    List<Tile> _tiles;
-
-    // implement with unity grid?
-    // [SerializeField]
-    // Grid grid;
+    List<Tile> tiles;
 
     // Start is called before the first frame update
     void Start()
@@ -30,16 +26,24 @@ public class GridManager : MonoBehaviour
 
     void InitGrid()
     {
-        _tiles = new List<Tile>();
-        if (_tile != null) {
-            for (int i = 0; i < _gridProperties.x; i++) {
-                for (int j = 0; j < _gridProperties.y; j++) {
-                    _tile.transform.localScale = new Vector3(_gridProperties.size, _gridProperties.size, transform.localScale.z);
-                    float offset = _gridProperties.size / 0.1f;
-                    var tile = Instantiate(_tile, new Vector3(i * offset, j * offset, 0), Quaternion.identity);
-                    _tiles.Add(tile);
+        tiles = new List<Tile>();
+        if (tile != null) {
+            for (int i = 0; i < gridProperties.x; i++) {
+                for (int j = 0; j < gridProperties.y; j++) {
+                    float offset = gridProperties.size / 0.1f;
+                    var newTile = Instantiate(tile, new Vector3(i * offset, j * offset, 0), Quaternion.identity);
+                    newTile.transform.localScale = new Vector3(gridProperties.size, gridProperties.size, transform.localScale.z);
+                    tiles.Add(newTile);
                 }
             }
-        }    
+        }
+    }
+
+    int Flatten(int x, int y) {
+        return y * gridProperties.x + x;
+    }
+
+    (int x, int y) Unflatten(int x) {
+        return (x % gridProperties.x, x / gridProperties.x);
     }
 }

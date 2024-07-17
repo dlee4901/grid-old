@@ -192,12 +192,76 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 2565791960317421149, guid: ba6e35289bc424beb97ec65579c7520e, type: 3}
+      propertyPath: m_DefaultActionMap
+      value: player
+      objectReference: {fileID: 0}
+    - target: {fileID: 2565791960317421149, guid: ba6e35289bc424beb97ec65579c7520e, type: 3}
+      propertyPath: m_ActionEvents.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 2565791960317421149, guid: ba6e35289bc424beb97ec65579c7520e, type: 3}
+      propertyPath: m_ActionEvents.Array.data[0].m_ActionId
+      value: 1ee6919b-f046-41e1-8b50-9f512e232b15
+      objectReference: {fileID: 0}
+    - target: {fileID: 2565791960317421149, guid: ba6e35289bc424beb97ec65579c7520e, type: 3}
+      propertyPath: m_ActionEvents.Array.data[1].m_ActionId
+      value: f1584420-a0ef-4e29-beb3-87f13df4ede6
+      objectReference: {fileID: 0}
+    - target: {fileID: 2565791960317421149, guid: ba6e35289bc424beb97ec65579c7520e, type: 3}
+      propertyPath: m_ActionEvents.Array.data[0].m_ActionName
+      value: player/select[/Mouse/leftButton]
+      objectReference: {fileID: 0}
+    - target: {fileID: 2565791960317421149, guid: ba6e35289bc424beb97ec65579c7520e, type: 3}
+      propertyPath: m_ActionEvents.Array.data[1].m_ActionName
+      value: player/camera[/Mouse/leftButton]
+      objectReference: {fileID: 0}
+    - target: {fileID: 2565791960317421149, guid: ba6e35289bc424beb97ec65579c7520e, type: 3}
+      propertyPath: m_ActionEvents.Array.data[0].m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2565791960317421149, guid: ba6e35289bc424beb97ec65579c7520e, type: 3}
+      propertyPath: m_ActionEvents.Array.data[1].m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2565791960317421149, guid: ba6e35289bc424beb97ec65579c7520e, type: 3}
+      propertyPath: m_ActionEvents.Array.data[0].m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2565791960317421149, guid: ba6e35289bc424beb97ec65579c7520e, type: 3}
+      propertyPath: m_ActionEvents.Array.data[1].m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2565791960317421149, guid: ba6e35289bc424beb97ec65579c7520e, type: 3}
       propertyPath: m_ActionEvents.Array.data[0].m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 2565791960317421149, guid: ba6e35289bc424beb97ec65579c7520e, type: 3}
+      propertyPath: m_ActionEvents.Array.data[1].m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 724554361}
     - target: {fileID: 2565791960317421149, guid: ba6e35289bc424beb97ec65579c7520e, type: 3}
+      propertyPath: m_ActionEvents.Array.data[0].m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 2565791960317421149, guid: ba6e35289bc424beb97ec65579c7520e, type: 3}
+      propertyPath: m_ActionEvents.Array.data[1].m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 2565791960317421149, guid: ba6e35289bc424beb97ec65579c7520e, type: 3}
       propertyPath: m_ActionEvents.Array.data[0].m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 2565791960317421149, guid: ba6e35289bc424beb97ec65579c7520e, type: 3}
+      propertyPath: m_ActionEvents.Array.data[1].m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
       value: OnDrag
+      objectReference: {fileID: 0}
+    - target: {fileID: 2565791960317421149, guid: ba6e35289bc424beb97ec65579c7520e, type: 3}
+      propertyPath: m_ActionEvents.Array.data[1].m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: CameraManager, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 2565791960317421149, guid: ba6e35289bc424beb97ec65579c7520e, type: 3}
+      propertyPath: m_ActionEvents.Array.data[1].m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
     - target: {fileID: 4948104318210269980, guid: ba6e35289bc424beb97ec65579c7520e, type: 3}
       propertyPath: m_Name

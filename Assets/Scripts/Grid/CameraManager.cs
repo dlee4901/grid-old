@@ -8,34 +8,34 @@ using UnityEngine.UIElements;
 public class CameraManager : MonoBehaviour
 {
     [SerializeField]
-    GridProperties _gridProperties;
+    GridProperties gridProperties;
 
-    Camera _camera;
-    Vector3 _origin;
-    Vector3 _difference;
-    bool _isDragging;
+    Camera cam;
+    Vector3 origin;
+    Vector3 difference;
+    bool isDragging;
 
     void Awake()
     {
-        _camera = Camera.main;
+        cam = Camera.main;
     }
 
     public void OnDrag(InputAction.CallbackContext ctx)
     {
-        if (ctx.started) _origin = GetMousePosition;
-        _isDragging = ctx.started || ctx.performed;
+        if (ctx.started) origin = GetMousePosition;
+        isDragging = ctx.started || ctx.performed;
     }
 
     void LateUpdate()
     {
-        if (!_isDragging) return;
-        _difference = GetMousePosition - transform.position;
-        Vector3 newPos = _origin - _difference;
-        float offset = _gridProperties.size / 0.1f;
-        newPos.x = Mathf.Clamp(newPos.x, offset, _gridProperties.x * offset);
-        newPos.y = Mathf.Clamp(newPos.y, offset, _gridProperties.y * offset);
+        if (!isDragging) return;
+        difference = GetMousePosition - transform.position;
+        Vector3 newPos = origin - difference;
+        float offset = 10.24f * gridProperties.size;
+        newPos.x = Mathf.Clamp(newPos.x, offset, gridProperties.x * offset);
+        newPos.y = Mathf.Clamp(newPos.y, offset, gridProperties.y * offset);
         transform.position = newPos;
     }
 
-    Vector3 GetMousePosition => _camera.ScreenToWorldPoint(Mouse.current.position.ReadValue());
+    Vector3 GetMousePosition => cam.ScreenToWorldPoint(Mouse.current.position.ReadValue());
 }
