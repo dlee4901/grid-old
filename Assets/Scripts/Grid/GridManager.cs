@@ -4,12 +4,9 @@ using UnityEngine;
 
 public class GridManager : MonoBehaviour
 {
-    [SerializeField]
-    GridProperties gridProperties;
-
-    [SerializeField]
-    Tile tile;
-
+    [SerializeField] GridProperties gridProperties;
+    [SerializeField] Tile tile;
+    [SerializeField] List<GameObject> units;
     List<Tile> tiles;
 
     // Start is called before the first frame update
@@ -26,7 +23,7 @@ public class GridManager : MonoBehaviour
 
     void InitGrid()
     {
-        tiles = new List<Tile>();
+        tiles = new();
         if (tile != null) {
             for (int i = 0; i < gridProperties.x; i++) {
                 for (int j = 0; j < gridProperties.y; j++) {
@@ -39,11 +36,54 @@ public class GridManager : MonoBehaviour
         }
     }
 
+    List<int> GetMovePositions(int position, UnitMovement movement) {
+        return GetMovePositions(Unflatten(position), movement);
+    }
+
+    List<int> GetMovePositions((int, int) position, UnitMovement movement) {
+        List<int> movePositions = new();
+        var unit = GetUnit(position);
+        if (!IsValidPosition(position) || unit == null) {
+            return movePositions;
+        }
+        
+
+        return movePositions;
+    }
+
+    // Helper Methods
     int Flatten(int x, int y) {
         return y * gridProperties.x + x;
     }
 
     (int x, int y) Unflatten(int x) {
         return (x % gridProperties.x, x / gridProperties.x);
+    }
+
+    void AddUnit(int position, GameObject unit) {
+        units[position] = unit;
+    }
+
+    void MoveUnit(int src, int dst) {
+        if (units[src] != null) {
+            units[dst] = units[src];
+            units[src] = null;
+        }
+    }
+
+    GameObject GetUnit(int position) {
+        return units[position];
+    }
+
+    GameObject GetUnit((int, int) position) {
+        return GetUnit(Flatten(position.Item1, position.Item2));
+    }
+
+    bool IsValidPosition(int position) {
+        return IsValidPosition(Unflatten(position));
+    }
+
+    bool IsValidPosition((int, int) position) {
+        return position.Item1 >= 0 && position.Item2 >= 0 && position.Item1 < gridProperties.x && position.Item2 < gridProperties.y;
     }
 }

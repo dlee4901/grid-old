@@ -6,11 +6,8 @@ using UnityEngine.InputSystem;
 
 public class Tile : MonoBehaviour
 {
-    [SerializeField]
-    SpriteRenderer sprite;
-
-    // [SerializeField]
-    // private BoxCollider2D collider;
+    [SerializeField] SpriteRenderer sprite;
+    // [SerializeField] private BoxCollider2D collider;
 
     bool isHovered;
 

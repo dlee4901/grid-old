@@ -7,9 +7,7 @@ using UnityEngine.UIElements;
 
 public class CameraManager : MonoBehaviour
 {
-    [SerializeField]
-    GridProperties gridProperties;
-
+    [SerializeField] GridProperties gridProperties;
     Camera cam;
     Vector3 origin;
     Vector3 difference;
