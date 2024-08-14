@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public enum Direction {step, stride, line, diagonal, straight, horizontal, vertical, N, NE, E, SE, S, SW, W, NW}
+public enum Direction {N, NE, E, SE, S, SW, W, NW, step, stride, line, diagonal, straight, horizontal, vertical}
 public enum DirectionFacing {N = Direction.N, E = Direction.E, S = Direction.S, W = Direction.W}
 
 [CreateAssetMenu(menuName = "Unit Movement")]

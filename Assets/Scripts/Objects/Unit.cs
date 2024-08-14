@@ -2,8 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(menuName = "Unit Properties")]
-public class UnitProperties : ScriptableObject
+[CreateAssetMenu(menuName = "Unit")]
+public class Unit : ScriptableObject
 {
     public string title;
     public int maxHealth;
