@@ -135,6 +135,10 @@ PrefabInstance:
       value: Main Camera
       objectReference: {fileID: 0}
     - target: {fileID: 5986778479441841594, guid: 57234644687704ef89d2caab5b5d5e56, type: 3}
+      propertyPath: gridRules
+      value: 
+      objectReference: {fileID: 11400000, guid: 8ee95015972334a4488d1058b492deb8, type: 2}
+    - target: {fileID: 5986778479441841594, guid: 57234644687704ef89d2caab5b5d5e56, type: 3}
       propertyPath: gridProperties
       value: 
       objectReference: {fileID: 11400000, guid: 8ee95015972334a4488d1058b492deb8, type: 2}
@@ -316,6 +320,54 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ba6e35289bc424beb97ec65579c7520e, type: 3}
+--- !u!1 &431314059
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 431314060}
+  - component: {fileID: 431314061}
+  m_Layer: 0
+  m_Name: Player 1
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &431314060
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 431314059}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -0.13945696, y: -0.31085598, z: -9.991921}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &431314061
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 431314059}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bb87c233d98d7447e908a1806239d4ac, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gridProperties: {fileID: 0}
+  ownedUnits:
+  - {fileID: 11400000, guid: 03a6c1fbafa5948339ec813100105415, type: 2}
+  deployedUnits: []
 --- !u!114 &724554361 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 5986778479441841594, guid: 57234644687704ef89d2caab5b5d5e56, type: 3}
@@ -368,6 +420,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 11400000, guid: 55b9c8e8fd5b14e37adb69d0321a11fb, type: 2}
     - target: {fileID: -849590080271249864, guid: 39c9f3674a0574359963a00e630a317d, type: 3}
+      propertyPath: gridRules
+      value: 
+      objectReference: {fileID: 11400000, guid: 8ee95015972334a4488d1058b492deb8, type: 2}
+    - target: {fileID: -849590080271249864, guid: 39c9f3674a0574359963a00e630a317d, type: 3}
       propertyPath: gridProperties
       value: 
       objectReference: {fileID: 11400000, guid: 8ee95015972334a4488d1058b492deb8, type: 2}
@@ -375,6 +431,10 @@ PrefabInstance:
       propertyPath: _gridProperties
       value: 
       objectReference: {fileID: 11400000, guid: 8ee95015972334a4488d1058b492deb8, type: 2}
+    - target: {fileID: -849590080271249864, guid: 39c9f3674a0574359963a00e630a317d, type: 3}
+      propertyPath: players.Array.size
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 120249147877760790, guid: 39c9f3674a0574359963a00e630a317d, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -431,3 +491,4 @@ SceneRoots:
   - {fileID: 5841701830824166374}
   - {fileID: 36306429}
   - {fileID: 251699090}
+  - {fileID: 431314060}

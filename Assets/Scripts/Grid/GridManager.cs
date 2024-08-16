@@ -8,7 +8,6 @@ public class GridManager : MonoBehaviour
 {
     [SerializeField] GridProperties gridProperties;
     [SerializeField] Tile tile;
-    [SerializeField] List<Unit> units;
     List<Tile> tiles;
 
     // Start is called before the first frame update
@@ -25,6 +24,11 @@ public class GridManager : MonoBehaviour
 
     void InitGrid()
     {
+        if (gridProperties == null)
+        {
+            Debug.LogError("null grid properties");
+            return;
+        }
         tiles = new();
         if (tile != null) {
             for (int i = 0; i < gridProperties.x; i++)
@@ -38,24 +42,41 @@ public class GridManager : MonoBehaviour
                 }
             }
         }
-        TestGrid();
+        //TestGrid();
     }
 
     void TestGrid()
     {
-        Unit test1 = new();
-        test1.title = "rook";
-        test1.maxHealth = 1;
-        test1.currentHealth = 1;
-        test1.facing = DirectionFacing.N;
-        UnitMovement test1move = new();
-        test1move.direction = Direction.straight;
-        test1move.distance = -1;
-        test1move.exact = false;
-        test1move.relativeFacing = false;
-        test1.movement = test1move;
+        var rookMove = UnitMovement.Create(Direction.straight, -1, false, false);
+        var bishopMove = UnitMovement.Create(Direction.diagonal, -1, false, false);
 
-        AddUnit(1, test1);
+        var rook1 = Unit.Create("rook1", rookMove);
+        var bishop1 = Unit.Create("bishop1", bishopMove);
+        var rook2 = Unit.Create("rook2", rookMove);
+        var bishop2 = Unit.Create("bishop2", bishopMove);
+
+        ValidateDeployPositions();
+        for (int i = 0; i < gridProperties.deployPositions.Count; i++)
+        {
+            var deployPositions = gridProperties.deployPositions[i];
+            AddUnit(deployPositions.positions[0], rook);
+            AddUnit(deployPositions.positions[1], bishop);
+        }
+    }
+
+    void ValidateDeployPositions()
+    {
+        foreach (var deployPositions in gridProperties.deployPositions)
+        {
+            for (int i = 0; i < deployPositions.positions.Count; i++)
+            {
+                if (!IsValidPosition(deployPositions.positions[i]))
+                {
+                    deployPositions.positions.RemoveAt(i);
+                    i--;
+                }
+            }
+        }
     }
 
     HashSet<Vector2Int> GetMovePositions(Vector2Int position)
@@ -189,30 +210,49 @@ public class GridManager : MonoBehaviour
     }
 
     // Helper Methods
-    void AddUnit(int position, Unit unit) {
-        units[position] = unit;
-    }
-
-    void MoveUnit(int src, int dst) {
-        if (units[src] != null) {
-            units[dst] = units[src];
-            units[src] = null;
+    void AddUnit(Vector2Int position, Unit unit)
+    {
+        if (!IsValidPosition(position))
+        {
+            Debug.LogError("getting invalid position");
+        }
+        else
+        {
+            Debug.Log(Flatten(position));
+            gridProperties.units.Add(Flatten(position), unit);
         }
     }
 
-    Unit GetUnit(Vector2Int position) {
-        return units[Flatten(position)];
+    void MoveUnit(int src, int dst)
+    {
+        if (gridProperties.units[src] != null) {
+            gridProperties.units[dst] = gridProperties.units[src];
+            gridProperties.units[src] = null;
+        }
     }
 
-    bool IsValidPosition(Vector2Int position) {
+    Unit GetUnit(Vector2Int position)
+    {
+        if (!IsValidPosition(position))
+        {
+            Debug.LogError("getting invalid position");
+            return null;
+        }
+        return gridProperties.units[Flatten(position)];
+    }
+
+    bool IsValidPosition(Vector2Int position)
+    {
         return position.x >= 0 && position.y >= 0 && position.x < gridProperties.x && position.y < gridProperties.y;
     }
 
-    int Flatten(Vector2Int position) {
+    int Flatten(Vector2Int position)
+    {
         return position.y * gridProperties.x + position.x;
     }
 
-    Vector2Int Unflatten(int position) {
+    Vector2Int Unflatten(int position)
+    {
         return new Vector2Int(position % gridProperties.x, position / gridProperties.x);
     }
 }

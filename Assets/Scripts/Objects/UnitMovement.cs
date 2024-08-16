@@ -22,4 +22,20 @@ public class UnitMovement : ScriptableObject
         relativeFacing = false;
         chain = null;
     }
+
+    void Init(Direction _direction, int _distance, bool _exact, bool _relativeFacing, UnitMovement _chain=null)
+    {
+        direction = _direction;
+        distance = _distance;
+        exact = _exact;
+        relativeFacing = _relativeFacing;
+        chain = _chain;
+    }
+
+    public static UnitMovement Create(Direction _direction, int _distance, bool _exact, bool _relativeFacing, UnitMovement _chain=null)
+    {
+        var unitMovement = ScriptableObject.CreateInstance<UnitMovement>();
+        unitMovement.Init(_direction, _distance, _exact, _relativeFacing, _chain);
+        return unitMovement;
+    }
 }
