@@ -56,12 +56,14 @@ public class GridManager : MonoBehaviour
         var bishop2 = Unit.Create("bishop2", bishopMove);
 
         ValidateDeployPositions();
-        for (int i = 0; i < gridProperties.deployPositions.Count; i++)
-        {
-            var deployPositions = gridProperties.deployPositions[i];
-            AddUnit(deployPositions.positions[0], rook);
-            AddUnit(deployPositions.positions[1], bishop);
-        }
+        var deployPositions1 = gridProperties.deployPositions[0];
+        var deployPositions2 = gridProperties.deployPositions[1];
+
+        AddUnit(deployPositions1.positions[0], rook1);
+        AddUnit(deployPositions1.positions[1], bishop1);
+
+        AddUnit(deployPositions2.positions[0], rook2);
+        AddUnit(deployPositions2.positions[1], bishop2);
     }
 
     void ValidateDeployPositions()
