@@ -36,7 +36,10 @@ public class GridManager : MonoBehaviour
                 for (int j = 0; j < gridProperties.y; j++)
                 {
                     float offset = gridProperties.size / 0.1f;
-                    var newTile = Instantiate(tile, new Vector3(i * offset, j * offset, 0), Quaternion.identity);
+                    float x = i * offset + 1;
+                    float y = j * offset + 1;
+                    var newTile = Instantiate(tile, new Vector3(x, y, 0), Quaternion.identity);
+                    //Debug.Log(x + " " + y);
                     newTile.transform.localScale = new Vector3(gridProperties.size, gridProperties.size, transform.localScale.z);
                     tiles.Add(newTile);
                 }

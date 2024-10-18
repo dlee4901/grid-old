@@ -24,11 +24,11 @@ public partial class @InputActions: IInputActionCollection2, IDisposable
     ""name"": ""InputActions"",
     ""maps"": [
         {
-            ""name"": ""player"",
+            ""name"": ""Player"",
             ""id"": ""d5921ba7-77eb-4da0-b499-c726a2d42443"",
             ""actions"": [
                 {
-                    ""name"": ""select"",
+                    ""name"": ""Select"",
                     ""type"": ""Button"",
                     ""id"": ""1ee6919b-f046-41e1-8b50-9f512e232b15"",
                     ""expectedControlType"": ""Button"",
@@ -37,13 +37,22 @@ public partial class @InputActions: IInputActionCollection2, IDisposable
                     ""initialStateCheck"": false
                 },
                 {
-                    ""name"": ""camera"",
+                    ""name"": ""MoveCamera"",
                     ""type"": ""Button"",
                     ""id"": ""f1584420-a0ef-4e29-beb3-87f13df4ede6"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """",
-                    ""initialStateCheck"": false
+                    ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""ZoomCamera"",
+                    ""type"": ""Value"",
+                    ""id"": ""754c6cbb-3f06-4947-9ead-dffcf6626440"",
+                    ""expectedControlType"": ""Axis"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": true
                 }
             ],
             ""bindings"": [
@@ -54,7 +63,7 @@ public partial class @InputActions: IInputActionCollection2, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""select"",
+                    ""action"": ""Select"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -65,7 +74,18 @@ public partial class @InputActions: IInputActionCollection2, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""camera"",
+                    ""action"": ""MoveCamera"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""93575081-fb73-4335-8694-e98e69dbe9f0"",
+                    ""path"": ""<Mouse>/scroll/y"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""ZoomCamera"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -74,10 +94,11 @@ public partial class @InputActions: IInputActionCollection2, IDisposable
     ],
     ""controlSchemes"": []
 }");
-        // player
-        m_player = asset.FindActionMap("player", throwIfNotFound: true);
-        m_player_select = m_player.FindAction("select", throwIfNotFound: true);
-        m_player_camera = m_player.FindAction("camera", throwIfNotFound: true);
+        // Player
+        m_Player = asset.FindActionMap("Player", throwIfNotFound: true);
+        m_Player_Select = m_Player.FindAction("Select", throwIfNotFound: true);
+        m_Player_MoveCamera = m_Player.FindAction("MoveCamera", throwIfNotFound: true);
+        m_Player_ZoomCamera = m_Player.FindAction("ZoomCamera", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -136,18 +157,20 @@ public partial class @InputActions: IInputActionCollection2, IDisposable
         return asset.FindBinding(bindingMask, out action);
     }
 
-    // player
-    private readonly InputActionMap m_player;
+    // Player
+    private readonly InputActionMap m_Player;
     private List<IPlayerActions> m_PlayerActionsCallbackInterfaces = new List<IPlayerActions>();
-    private readonly InputAction m_player_select;
-    private readonly InputAction m_player_camera;
+    private readonly InputAction m_Player_Select;
+    private readonly InputAction m_Player_MoveCamera;
+    private readonly InputAction m_Player_ZoomCamera;
     public struct PlayerActions
     {
         private @InputActions m_Wrapper;
         public PlayerActions(@InputActions wrapper) { m_Wrapper = wrapper; }
-        public InputAction @select => m_Wrapper.m_player_select;
-        public InputAction @camera => m_Wrapper.m_player_camera;
-        public InputActionMap Get() { return m_Wrapper.m_player; }
+        public InputAction @Select => m_Wrapper.m_Player_Select;
+        public InputAction @MoveCamera => m_Wrapper.m_Player_MoveCamera;
+        public InputAction @ZoomCamera => m_Wrapper.m_Player_ZoomCamera;
+        public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
         public bool enabled => Get().enabled;
@@ -156,22 +179,28 @@ public partial class @InputActions: IInputActionCollection2, IDisposable
         {
             if (instance == null || m_Wrapper.m_PlayerActionsCallbackInterfaces.Contains(instance)) return;
             m_Wrapper.m_PlayerActionsCallbackInterfaces.Add(instance);
-            @select.started += instance.OnSelect;
-            @select.performed += instance.OnSelect;
-            @select.canceled += instance.OnSelect;
-            @camera.started += instance.OnCamera;
-            @camera.performed += instance.OnCamera;
-            @camera.canceled += instance.OnCamera;
+            @Select.started += instance.OnSelect;
+            @Select.performed += instance.OnSelect;
+            @Select.canceled += instance.OnSelect;
+            @MoveCamera.started += instance.OnMoveCamera;
+            @MoveCamera.performed += instance.OnMoveCamera;
+            @MoveCamera.canceled += instance.OnMoveCamera;
+            @ZoomCamera.started += instance.OnZoomCamera;
+            @ZoomCamera.performed += instance.OnZoomCamera;
+            @ZoomCamera.canceled += instance.OnZoomCamera;
         }
 
         private void UnregisterCallbacks(IPlayerActions instance)
         {
-            @select.started -= instance.OnSelect;
-            @select.performed -= instance.OnSelect;
-            @select.canceled -= instance.OnSelect;
-            @camera.started -= instance.OnCamera;
-            @camera.performed -= instance.OnCamera;
-            @camera.canceled -= instance.OnCamera;
+            @Select.started -= instance.OnSelect;
+            @Select.performed -= instance.OnSelect;
+            @Select.canceled -= instance.OnSelect;
+            @MoveCamera.started -= instance.OnMoveCamera;
+            @MoveCamera.performed -= instance.OnMoveCamera;
+            @MoveCamera.canceled -= instance.OnMoveCamera;
+            @ZoomCamera.started -= instance.OnZoomCamera;
+            @ZoomCamera.performed -= instance.OnZoomCamera;
+            @ZoomCamera.canceled -= instance.OnZoomCamera;
         }
 
         public void RemoveCallbacks(IPlayerActions instance)
@@ -188,10 +217,11 @@ public partial class @InputActions: IInputActionCollection2, IDisposable
             AddCallbacks(instance);
         }
     }
-    public PlayerActions @player => new PlayerActions(this);
+    public PlayerActions @Player => new PlayerActions(this);
     public interface IPlayerActions
     {
         void OnSelect(InputAction.CallbackContext context);
-        void OnCamera(InputAction.CallbackContext context);
+        void OnMoveCamera(InputAction.CallbackContext context);
+        void OnZoomCamera(InputAction.CallbackContext context);
     }
 }

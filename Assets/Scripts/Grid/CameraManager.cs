@@ -12,10 +12,23 @@ public class CameraManager : MonoBehaviour
     Vector3 origin;
     Vector3 difference;
     bool isDragging;
+    bool isZooming;
+    float scrollAmount;
+    float height;
+    float width;
+    float zoom;
+    float zoomMultiplier = 0.01f;
+    float minZoom = 2f;
+    float maxZoom = 8f;
+    float velocity = 0f;
+    float smoothTime = 0.25f;
 
     void Awake()
     {
         cam = Camera.main;
+        zoom = cam.orthographicSize;
+        height = 2f * cam.orthographicSize;
+        width = height * cam.aspect;
     }
 
     public void OnDrag(InputAction.CallbackContext ctx)
@@ -24,15 +37,41 @@ public class CameraManager : MonoBehaviour
         isDragging = ctx.started || ctx.performed;
     }
 
+    public void OnZoom(InputAction.CallbackContext ctx)
+    {
+        if (ctx.started) origin = GetMousePosition;
+        scrollAmount = ctx.ReadValue<float>();
+        isZooming = ctx.started || ctx.performed;
+    }
+
     void LateUpdate()
     {
-        if (!isDragging) return;
-        difference = GetMousePosition - transform.position;
-        Vector3 newPos = origin - difference;
-        float offset = 10.24f * gridProperties.size;
-        newPos.x = Mathf.Clamp(newPos.x, offset, gridProperties.x * offset);
-        newPos.y = Mathf.Clamp(newPos.y, offset, gridProperties.y * offset);
-        transform.position = newPos;
+        if (isDragging)
+        {
+            height = 2f * cam.orthographicSize;
+            width = height * cam.aspect;
+            difference = GetMousePosition - transform.position;
+            Vector3 newPos = origin - difference;
+
+            float offset = 10.24f * gridProperties.size;
+            float xMin = 0;
+            float yMin = 0;
+            float xMax = gridProperties.x * offset;
+            float yMax = gridProperties.y * offset;
+            newPos.x = Mathf.Clamp(newPos.x, xMin, xMax);
+            newPos.y = Mathf.Clamp(newPos.y, yMin, yMax);
+
+            transform.position = newPos;
+        }
+        else if (isZooming)
+        {
+            Debug.Log(scrollAmount + " " + zoom);
+            zoom -= scrollAmount * zoomMultiplier;
+            zoom = Mathf.Clamp(zoom, minZoom, maxZoom);
+
+            //cam.orthographicSize = Mathf.SmoothDamp(cam.orthographicSize, zoom, ref velocity, smoothTime);
+            cam.orthographicSize = zoom;
+        }
     }
 
     Vector3 GetMousePosition => cam.ScreenToWorldPoint(Mouse.current.position.ReadValue());
