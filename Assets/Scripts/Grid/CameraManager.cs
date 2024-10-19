@@ -7,7 +7,6 @@ using UnityEngine.UIElements;
 
 public class CameraManager : MonoBehaviour
 {
-    [SerializeField] GridProperties gridProperties;
     Camera cam;
     Vector3 origin;
     Vector3 difference;
@@ -53,11 +52,11 @@ public class CameraManager : MonoBehaviour
             difference = GetMousePosition - transform.position;
             Vector3 newPos = origin - difference;
 
-            float offset = 10.24f * gridProperties.size;
+            float offset = 10.24f * 0.1f;
             float xMin = 0;
             float yMin = 0;
-            float xMax = gridProperties.x * offset;
-            float yMax = gridProperties.y * offset;
+            float xMax = 0.1f * offset;
+            float yMax = 0.1f * offset;
             newPos.x = Mathf.Clamp(newPos.x, xMin, xMax);
             newPos.y = Mathf.Clamp(newPos.y, yMin, yMax);
 

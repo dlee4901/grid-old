@@ -6,9 +6,17 @@ using UnityEngine;
 
 public class GridManager : MonoBehaviour
 {
-    [SerializeField] GridProperties gridProperties;
-    [SerializeField] Tile tile;
-    List<Tile> tiles;
+    //[SerializeField] GridProperties gridProperties;
+
+    public int _x;
+    public int _y;
+    public float _tileScale;
+    public int _unitCap;
+    public int _numPlayers;
+    List<Tile> _tiles;
+    List<Unit> _units;
+
+    [SerializeField] Tile _tile;
 
     // Start is called before the first frame update
     void Start()
@@ -24,65 +32,59 @@ public class GridManager : MonoBehaviour
 
     void InitGrid()
     {
-        if (gridProperties == null)
+        _tiles = new();
+        for (int j = 0; j < _y; j++)
         {
-            Debug.LogError("null grid properties");
-            return;
-        }
-        tiles = new();
-        if (tile != null) {
-            for (int i = 0; i < gridProperties.x; i++)
+            for (int i = 0; i < _x; i++)
             {
-                for (int j = 0; j < gridProperties.y; j++)
-                {
-                    float offset = gridProperties.size / 0.1f;
-                    float x = i * offset + 1;
-                    float y = j * offset + 1;
-                    var newTile = Instantiate(tile, new Vector3(x, y, 0), Quaternion.identity);
-                    //Debug.Log(x + " " + y);
-                    newTile.transform.localScale = new Vector3(gridProperties.size, gridProperties.size, transform.localScale.z);
-                    tiles.Add(newTile);
-                }
+                float x = i * _tileScale / 0.1f;
+                float y = j * _tileScale / 0.1f;
+                var tile_ = Instantiate(_tile, new Vector3(x, y, 0), Quaternion.identity, this.transform);
+                tile_.transform.localScale = new Vector3(_tileScale, _tileScale, transform.localScale.z);
+                tile_.Id = Flatten(i, j);
+                _tiles.Add(tile_);
+                //Debug.Log(i + " " + j + " " + Flatten(i, j) + " " + Unflatten(Flatten(i, j)));
+                //Debug.Log(_tiles[Flatten(i, j)].Id);
             }
         }
         //TestGrid();
     }
 
-    void TestGrid()
-    {
-        var rookMove = UnitMovement.Create(Direction.straight, -1, false, false);
-        var bishopMove = UnitMovement.Create(Direction.diagonal, -1, false, false);
+    // void TestGrid()
+    // {
+    //     var rookMove = UnitMovement.Create(Direction.straight, -1, false, false);
+    //     var bishopMove = UnitMovement.Create(Direction.diagonal, -1, false, false);
 
-        var rook1 = Unit.Create("rook1", rookMove);
-        var bishop1 = Unit.Create("bishop1", bishopMove);
-        var rook2 = Unit.Create("rook2", rookMove);
-        var bishop2 = Unit.Create("bishop2", bishopMove);
+    //     var rook1 = Unit.Create("rook1", rookMove);
+    //     var bishop1 = Unit.Create("bishop1", bishopMove);
+    //     var rook2 = Unit.Create("rook2", rookMove);
+    //     var bishop2 = Unit.Create("bishop2", bishopMove);
 
-        ValidateDeployPositions();
-        var deployPositions1 = gridProperties.deployPositions[0];
-        var deployPositions2 = gridProperties.deployPositions[1];
+    //     ValidateDeployPositions();
+    //     var deployPositions1 = gridProperties.deployPositions[0];
+    //     var deployPositions2 = gridProperties.deployPositions[1];
 
-        AddUnit(deployPositions1.positions[0], rook1);
-        AddUnit(deployPositions1.positions[1], bishop1);
+    //     AddUnit(deployPositions1.positions[0], rook1);
+    //     AddUnit(deployPositions1.positions[1], bishop1);
 
-        AddUnit(deployPositions2.positions[0], rook2);
-        AddUnit(deployPositions2.positions[1], bishop2);
-    }
+    //     AddUnit(deployPositions2.positions[0], rook2);
+    //     AddUnit(deployPositions2.positions[1], bishop2);
+    // }
 
-    void ValidateDeployPositions()
-    {
-        foreach (var deployPositions in gridProperties.deployPositions)
-        {
-            for (int i = 0; i < deployPositions.positions.Count; i++)
-            {
-                if (!IsValidPosition(deployPositions.positions[i]))
-                {
-                    deployPositions.positions.RemoveAt(i);
-                    i--;
-                }
-            }
-        }
-    }
+    // void ValidateDeployPositions()
+    // {
+    //     foreach (var deployPositions in gridProperties.deployPositions)
+    //     {
+    //         for (int i = 0; i < deployPositions.positions.Count; i++)
+    //         {
+    //             if (!IsValidPosition(deployPositions.positions[i]))
+    //             {
+    //                 deployPositions.positions.RemoveAt(i);
+    //                 i--;
+    //             }
+    //         }
+    //     }
+    // }
 
     HashSet<Vector2Int> GetMovePositions(Vector2Int position)
     {
@@ -98,7 +100,7 @@ public class GridManager : MonoBehaviour
         List<Vector2Int> validMoves = new();
         List<Vector2Int> unitVectors = GetUnitVectors(unit);
         int distance = unit.movement.distance;
-        if (distance == -1) distance = Math.Max(gridProperties.x, gridProperties.y);
+        if (distance == -1) distance = Math.Max(_x, _y);
         if (step)
         {
 
@@ -224,15 +226,15 @@ public class GridManager : MonoBehaviour
         else
         {
             Debug.Log(Flatten(position));
-            gridProperties.units.Add(Flatten(position), unit);
+            _units.Insert(Flatten(position), unit);
         }
     }
 
     void MoveUnit(int src, int dst)
     {
-        if (gridProperties.units[src] != null) {
-            gridProperties.units[dst] = gridProperties.units[src];
-            gridProperties.units[src] = null;
+        if (_units[src] != null) {
+            _units[dst] = _units[src];
+            _units[src] = null;
         }
     }
 
@@ -243,21 +245,26 @@ public class GridManager : MonoBehaviour
             Debug.LogError("getting invalid position");
             return null;
         }
-        return gridProperties.units[Flatten(position)];
+        return _units[Flatten(position)];
     }
 
     bool IsValidPosition(Vector2Int position)
     {
-        return position.x >= 0 && position.y >= 0 && position.x < gridProperties.x && position.y < gridProperties.y;
+        return position.x >= 0 && position.y >= 0 && position.x < _x && position.y < _y;
     }
 
     int Flatten(Vector2Int position)
     {
-        return position.y * gridProperties.x + position.x;
+        return Flatten(position.x, position.y);
+    }
+
+    int Flatten(int x, int y)
+    {
+        return y * _x + x;
     }
 
     Vector2Int Unflatten(int position)
     {
-        return new Vector2Int(position % gridProperties.x, position / gridProperties.x);
+        return new Vector2Int(position % _x, position / _x);
     }
 }

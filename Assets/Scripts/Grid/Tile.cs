@@ -4,30 +4,44 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
+public enum TileTerrain
+{ 
+    Default,
+    Void
+}
+
 public class Tile : MonoBehaviour
 {
-    [SerializeField] SpriteRenderer sprite;
-    // [SerializeField] private BoxCollider2D collider;
+    public int? Id { get; set; }
+    public TileTerrain? Terrain { get; set; }
+    [SerializeField] SpriteRenderer _sprite;
+    // [SerializeField] BoxCollider2D _collider;
 
-    bool isHovered;
+    public bool Hovered { get; set; }
+
+    public Tile()
+    {
+        Id = -1;
+        Terrain = TileTerrain.Default;
+    }
 
     public void OnSelect(InputAction.CallbackContext ctx) 
     {
-        if (ctx.started && isHovered)
+        if (ctx.started && Hovered)
         {
-            sprite.material.color = new Color(0.2f, 0.2f, 0.2f);
+            _sprite.material.color = new Color(0.2f, 0.2f, 0.2f);
         }
     }
     
     void OnMouseEnter()
     {
-        isHovered = true;
-        sprite.material.color = new Color(0.5f, 0.5f, 0.5f);
+        Hovered = true;
+        _sprite.material.color = new Color(0.5f, 0.5f, 0.5f);
     }
 
     void OnMouseExit()
     {
-        isHovered = false;
-        sprite.material.color = new Color(1.0f, 1.0f, 1.0f);
+        Hovered = false;
+        _sprite.material.color = new Color(1.0f, 1.0f, 1.0f);
     }
 }
