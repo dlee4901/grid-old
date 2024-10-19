@@ -33,6 +33,7 @@ public class GridManager : MonoBehaviour
     void InitGrid()
     {
         _tiles = new();
+        _units = new();
         for (int j = 0; j < _y; j++)
         {
             for (int i = 0; i < _x; i++)
@@ -43,6 +44,7 @@ public class GridManager : MonoBehaviour
                 tile_.transform.localScale = new Vector3(_tileScale, _tileScale, transform.localScale.z);
                 tile_.Id = Flatten(i, j);
                 _tiles.Add(tile_);
+                _units.Add(null);
                 //Debug.Log(i + " " + j + " " + Flatten(i, j) + " " + Unflatten(Flatten(i, j)));
                 //Debug.Log(_tiles[Flatten(i, j)].Id);
             }

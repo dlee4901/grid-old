@@ -37,6 +37,7 @@ public class Tile : MonoBehaviour
     {
         Hovered = true;
         _sprite.material.color = new Color(0.5f, 0.5f, 0.5f);
+        EventManager.current.StartTileEvent();
     }
 
     void OnMouseExit()
