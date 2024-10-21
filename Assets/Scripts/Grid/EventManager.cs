@@ -7,7 +7,7 @@ public class EventManager : MonoBehaviour
 {
     public static EventManager current;
 
-    public event Action TileHoverEvent;
+    public event Action<int> TileHoverEvent;
 
     private void Awake()
     {
@@ -22,8 +22,8 @@ public class EventManager : MonoBehaviour
         DontDestroyOnLoad(gameObject);
     }
 
-    public void StartTileEvent()
+    public void StartTileEvent(int id)
     {
-        TileHoverEvent?.Invoke();
+        TileHoverEvent?.Invoke(id);
     }
 }

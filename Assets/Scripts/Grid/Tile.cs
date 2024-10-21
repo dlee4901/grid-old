@@ -12,7 +12,7 @@ public enum TileTerrain
 
 public class Tile : MonoBehaviour
 {
-    public int? Id { get; set; }
+    public int Id { get; set; }
     public TileTerrain? Terrain { get; set; }
     [SerializeField] SpriteRenderer _sprite;
     // [SerializeField] BoxCollider2D _collider;
@@ -37,12 +37,13 @@ public class Tile : MonoBehaviour
     {
         Hovered = true;
         _sprite.material.color = new Color(0.5f, 0.5f, 0.5f);
-        EventManager.current.StartTileEvent();
+        EventManager.current.StartTileEvent(Id);
     }
 
     void OnMouseExit()
     {
         Hovered = false;
         _sprite.material.color = new Color(1.0f, 1.0f, 1.0f);
+        EventManager.current.StartTileEvent(-1);
     }
 }
