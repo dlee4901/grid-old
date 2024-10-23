@@ -5,15 +5,15 @@ using System;
 
 public class EventManager : MonoBehaviour
 {
-    public static EventManager current;
+    public static EventManager Singleton;
 
     public event Action<int> TileHoverEvent;
 
     private void Awake()
     {
-        if (current == null)
+        if (Singleton == null)
         {
-            current = this;
+            Singleton = this;
         }
         else
         {

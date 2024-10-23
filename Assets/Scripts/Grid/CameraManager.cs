@@ -7,71 +7,75 @@ using UnityEngine.UIElements;
 
 public class CameraManager : MonoBehaviour
 {
-    Camera cam;
-    Vector3 origin;
-    Vector3 difference;
-    bool isDragging;
-    bool isZooming;
-    float scrollAmount;
-    float height;
-    float width;
-    float zoom;
-    float zoomMultiplier = 0.01f;
-    float minZoom = 2f;
-    float maxZoom = 8f;
-    float velocity = 0f;
-    float smoothTime = 0.25f;
+    Camera _cam;
+    Vector3 _origin;
+    Vector3 _difference;
+    bool _tileClicked;
+    bool _isDragging;
+    bool _isZooming;
+    float _scrollAmount;
+    float _height;
+    float _width;
+    float _zoom;
+    float _zoomMultiplier = 0.002f;
+    float _minZoom = 2f;
+    float _maxZoom = 8f;
+    float _velocity = 0f;
+    float _smoothTime = 0.25f;
+
+    [SerializeField] GridManager _grid;
 
     void Awake()
     {
-        cam = Camera.main;
-        zoom = cam.orthographicSize;
-        height = 2f * cam.orthographicSize;
-        width = height * cam.aspect;
+        _cam = Camera.main;
+        _zoom = _cam.orthographicSize;
+        _height = 2f * _cam.orthographicSize;
+        _width = _height * _cam.aspect;
     }
 
     public void OnDrag(InputAction.CallbackContext ctx)
     {
-        if (ctx.started) origin = GetMousePosition;
-        isDragging = ctx.started || ctx.performed;
+        if (ctx.started) _origin = GetMousePosition;
+        _tileClicked = (ctx.started || _tileClicked) && _grid._tileHovered != -1;
+        _isDragging = ctx.started || ctx.performed;
     }
 
     public void OnZoom(InputAction.CallbackContext ctx)
     {
-        if (ctx.started) origin = GetMousePosition;
-        scrollAmount = ctx.ReadValue<float>();
-        isZooming = ctx.started || ctx.performed;
+        if (ctx.started) _origin = GetMousePosition;
+        _scrollAmount = ctx.ReadValue<float>();
+        _isZooming = ctx.started || ctx.performed;
     }
 
     void LateUpdate()
     {
-        if (isDragging)
+        if (_isDragging && _tileClicked)
         {
-            height = 2f * cam.orthographicSize;
-            width = height * cam.aspect;
-            difference = GetMousePosition - transform.position;
-            Vector3 newPos = origin - difference;
+            _height = 2f * _cam.orthographicSize;
+            _width = _height * _cam.aspect;
+            _difference = GetMousePosition - transform.position;
+            Vector3 newPos = _origin - _difference;
 
-            float offset = 10.24f * 0.1f;
-            float xMin = 0;
-            float yMin = 0;
-            float xMax = 0.1f * offset;
-            float yMax = 0.1f * offset;
+            //float offset = 10.24f * 0.1f;
+            float xMin = 0f;
+            float yMin = 0f;
+            float xMax = 15f;
+            float yMax = 15f;
             newPos.x = Mathf.Clamp(newPos.x, xMin, xMax);
             newPos.y = Mathf.Clamp(newPos.y, yMin, yMax);
 
             transform.position = newPos;
         }
-        else if (isZooming)
+        else if (_isZooming && _grid._tileHovered != -1)
         {
-            Debug.Log(scrollAmount + " " + zoom);
-            zoom -= scrollAmount * zoomMultiplier;
-            zoom = Mathf.Clamp(zoom, minZoom, maxZoom);
+            //Debug.Log(_scrollAmount + " " + _zoom);
+            _zoom -= _scrollAmount * _zoomMultiplier;
+            _zoom = Mathf.Clamp(_zoom, _minZoom, _maxZoom);
 
             //cam.orthographicSize = Mathf.SmoothDamp(cam.orthographicSize, zoom, ref velocity, smoothTime);
-            cam.orthographicSize = zoom;
+            _cam.orthographicSize = _zoom;
         }
     }
 
-    Vector3 GetMousePosition => cam.ScreenToWorldPoint(Mouse.current.position.ReadValue());
+    Vector3 GetMousePosition => _cam.ScreenToWorldPoint(Mouse.current.position.ReadValue());
 }

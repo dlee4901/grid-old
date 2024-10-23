@@ -18,13 +18,13 @@ public class GridManager : MonoBehaviour
 
     [SerializeField] Tile _tile;
 
-    int _tileHovered;
+    public int _tileHovered;
 
     // Start is called before the first frame update
     void Start()
     {
         InitGrid();
-        EventManager.current.TileHoverEvent += TileHover;
+        EventManager.Singleton.TileHoverEvent += TileHover;
     }
 
     // Update is called once per frame
@@ -36,7 +36,6 @@ public class GridManager : MonoBehaviour
     void TileHover(int id)
     {
         _tileHovered = id;
-        Debug.Log(_tileHovered);
     }
 
     void InitGrid()

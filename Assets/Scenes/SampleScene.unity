@@ -135,6 +135,14 @@ PrefabInstance:
       value: Main Camera
       objectReference: {fileID: 0}
     - target: {fileID: 5986778479441841594, guid: 57234644687704ef89d2caab5b5d5e56, type: 3}
+      propertyPath: grid
+      value: 
+      objectReference: {fileID: 1221032677}
+    - target: {fileID: 5986778479441841594, guid: 57234644687704ef89d2caab5b5d5e56, type: 3}
+      propertyPath: _grid
+      value: 
+      objectReference: {fileID: 1221032677}
+    - target: {fileID: 5986778479441841594, guid: 57234644687704ef89d2caab5b5d5e56, type: 3}
       propertyPath: gridRules
       value: 
       objectReference: {fileID: 11400000, guid: 8ee95015972334a4488d1058b492deb8, type: 2}
@@ -1674,7 +1682,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1325788187}
   m_HandleRect: {fileID: 1325788186}
   m_Direction: 2
-  m_Value: 1
+  m_Value: 0.99999994
   m_Size: 0.27163342
   m_NumberOfSteps: 0
   m_OnValueChanged:
@@ -1829,6 +1837,17 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1176265682}
   m_CullTransparentMesh: 1
+--- !u!114 &1221032677 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: -849590080271249864, guid: 39c9f3674a0574359963a00e630a317d, type: 3}
+  m_PrefabInstance: {fileID: 1689126982}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e57e2a2d554d49819d02dc0d0bfe302, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1257080789
 GameObject:
   m_ObjectHideFlags: 0
